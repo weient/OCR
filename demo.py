@@ -25,7 +25,7 @@ def demo(opt):
     if opt.rgb:
         opt.input_channel = 3
     opt.image_folder = torchvision.transforms.functional.rgb_to_grayscale(opt.image_folder, 1)
-    print("img size: ", opt.image_folder.size())
+    #print("img size: ", opt.image_folder.size())
     model = Model(opt)
     print('model input parameters', opt.imgH, opt.imgW, opt.num_fiducial, opt.input_channel, opt.output_channel,
           opt.hidden_size, opt.num_class, opt.batch_max_length, opt.Transformation, opt.FeatureExtraction,
