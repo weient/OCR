@@ -6,6 +6,8 @@ import torch.backends.cudnn as cudnn
 import torch.utils.data
 import torch.nn.functional as F
 import torchvision
+import torchvision.transforms as T
+from PIL import Image
 
 from .utils import CTCLabelConverter, AttnLabelConverter
 from .dataset import RawDataset, AlignCollate
@@ -25,6 +27,17 @@ def demo(opt):
     if opt.rgb:
         opt.input_channel = 3
     opt.image_folder = torchvision.transforms.functional.rgb_to_grayscale(opt.image_folder, 1)
+    img_tmp = torch.split(opt.image_folder, 1)
+    transform = T.ToPILImage()
+    img_tuple = []
+    for i in img_tmp:
+        img_tuple.append(transform(i))
+    img_tuple = tuple(img_tuple)
+    resize = AlignCollate()
+    image_tensors = resize(img_tuple)
+    print("image tensors size: ", image_tensors.size())
+    
+    
     #print("img size: ", opt.image_folder.size())
     model = Model(opt)
     print('model input parameters', opt.imgH, opt.imgW, opt.num_fiducial, opt.input_channel, opt.output_channel,
@@ -47,7 +60,7 @@ def demo(opt):
         collate_fn=AlignCollate_demo, pin_memory=True)
     '''
     # predict
-    image_tensors = opt.image_folder
+    #image_tensors = opt.image_folder
     #image_tensors = torchvision.transforms.functional.rgb_to_grayscale(image_tensors)
     model.eval()
     with torch.no_grad():
