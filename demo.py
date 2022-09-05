@@ -7,9 +7,9 @@ import torch.utils.data
 import torch.nn.functional as F
 import torchvision
 
-from utils import CTCLabelConverter, AttnLabelConverter
-from dataset import RawDataset, AlignCollate
-from model import Model
+from .utils import CTCLabelConverter, AttnLabelConverter
+from .dataset import RawDataset, AlignCollate
+from .model import Model
 
 def demo(opt):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
