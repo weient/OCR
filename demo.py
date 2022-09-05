@@ -31,7 +31,8 @@ def demo(opt):
     transform = T.ToPILImage()
     img_tuple = []
     for i in img_tmp:
-        img_tuple.append(transform(i))
+        j = i.squeeze(dim = 0)
+        img_tuple.append(transform(j))
     img_tuple = tuple(img_tuple)
     resize = AlignCollate()
     image_tensors = resize(img_tuple)
