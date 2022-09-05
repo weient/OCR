@@ -5,6 +5,7 @@ import torch
 import torch.backends.cudnn as cudnn
 import torch.utils.data
 import torch.nn.functional as F
+import torchvision
 
 from utils import CTCLabelConverter, AttnLabelConverter
 from dataset import RawDataset, AlignCollate
@@ -45,6 +46,7 @@ def demo(opt):
     '''
     # predict
     image_tensors = opt.image_folder
+    image_tensors = torchvision.transforms.functional.rgb_to_grayscale(image_tensors)
     model.eval()
     with torch.no_grad():
         batch_size = image_tensors.size(0)
