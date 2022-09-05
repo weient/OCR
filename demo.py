@@ -24,6 +24,8 @@ def demo(opt):
 
     if opt.rgb:
         opt.input_channel = 3
+    opt.image_folder = torchvision.transforms.functional.rgb_to_grayscale(opt.image_folder)
+    
     model = Model(opt)
     print('model input parameters', opt.imgH, opt.imgW, opt.num_fiducial, opt.input_channel, opt.output_channel,
           opt.hidden_size, opt.num_class, opt.batch_max_length, opt.Transformation, opt.FeatureExtraction,
@@ -46,7 +48,7 @@ def demo(opt):
     '''
     # predict
     image_tensors = opt.image_folder
-    image_tensors = torchvision.transforms.functional.rgb_to_grayscale(image_tensors)
+    #image_tensors = torchvision.transforms.functional.rgb_to_grayscale(image_tensors)
     model.eval()
     with torch.no_grad():
         batch_size = image_tensors.size(0)
